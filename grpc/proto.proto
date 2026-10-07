@@ -2,28 +2,19 @@
 syntax = "proto3";
 option go_package = "RTVMandatoryActivity3/grpc/proto";
 
-message Nothing {}
-
 message ClientMessage {
     string name = 1;
     int32 lamport = 2;
-    string message = 3;
+    bool leave = 3;
+    string message = 4;
 }
 
-message ClientJoins {
-    string name = 1;
-    int32 lamport = 2;
-    string message = 3;
-}
-
-message ClientLeaves {
-    string name = 1;
+message ServerMessage {
+    string originalSender = 1;
     int32 lamport = 2;
     string message = 3;
 }
 
 service ChitChat {
-    rpc PublishMessage(ClientMessage) returns (ClientMessage);
-    rpc PublishJoin(Nothing) returns (ClientJoins);
-    rpc PublishLeave(Nothing) returns (ClientLeaves);
+    rpc Chat(stream ClientMessage) returns (stream ServerMessage);
 }
