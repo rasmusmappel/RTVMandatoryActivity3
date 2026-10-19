@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -16,14 +17,37 @@ import (
 	"math/rand"
 )
 
+type Clock struct {
+	lamport int32
+	mu      sync.Mutex
+}
+
+func (c *Clock) sendTick() int32 {
+	c.mu.Lock()
+	c.lamport++
+	returnValue := c.lamport
+	c.mu.Unlock()
+
+	return returnValue
+}
+
+func (c *Clock) mergeAndTick(message *pb.ServerMessage) int32 {
+	c.mu.Lock()
+	c.lamport = max(c.lamport, message.Lamport) + 1
+	returnValue := c.lamport
+	c.mu.Unlock()
+
+	return returnValue
+}
+
 func main() {
 	id := rand.Int31()
-	var lamport int32 = 0
+	clock := Clock{
+		lamport: 0,
+	}
 	join := true
 	leave := false
 	message := ""
-
-	lamportCh := make(chan int32)
 
 	conn, err := grpc.NewClient("localhost:5050", grpc.WithTransportCredentials(insecure.NewCredentials()))
 
@@ -44,7 +68,7 @@ func main() {
 	// construct join message
 	joinMessage := pb.ClientMessage{
 		Id:      id,
-		Lamport: lamport,
+		Lamport: clock.sendTick(),
 		Leave:   leave,
 		Join:    join,
 		Message: message,
@@ -52,15 +76,14 @@ func main() {
 
 	stream.Send(&joinMessage)
 
-	go PrintReceivedMessages(stream, lamportCh)
+	go clock.PrintReceivedMessages(stream)
 
 	join = false
 
 	var input string
 	scanner := bufio.NewScanner(os.Stdin)
 
-	for {
-		scanner.Scan()
+	for scanner.Scan() {
 		input = scanner.Text()
 
 		// leave check
@@ -68,18 +91,14 @@ func main() {
 			leave = true
 		}
 
-		lamport = max(<-lamportCh, lamport)
-
 		// construct message
 		messageConstruct := pb.ClientMessage{
 			Id:      id,
-			Lamport: lamport + 1,
+			Lamport: clock.sendTick(),
 			Leave:   leave,
 			Join:    join,
 			Message: input,
 		}
-
-		lamport = lamport + 1
 
 		// send message
 		stream.Send(&messageConstruct)
@@ -92,7 +111,7 @@ func main() {
 	}
 }
 
-func PrintReceivedMessages(stream pb.ChitChat_ChatClient, lamportCh chan int32) {
+func (c *Clock) PrintReceivedMessages(stream pb.ChitChat_ChatClient) {
 	for {
 		message, err := stream.Recv()
 
@@ -100,7 +119,7 @@ func PrintReceivedMessages(stream pb.ChitChat_ChatClient, lamportCh chan int32) 
 			log.Fatalf("Error in received message! Server could be shut down.")
 		}
 
-		lamportCh <- max(message.Lamport, <-lamportCh) + 1
+		c.mergeAndTick(message)
 
 		fmt.Println(message.Message)
 	}
