@@ -24,6 +24,7 @@ func (s *Server) sendTick() int32 {
 	s.mu.Lock()
 	s.lamport++
 	returnValue := s.lamport
+	log.Println("Server lamport ticked to: " + strconv.Itoa(int(s.lamport)))
 	s.mu.Unlock()
 
 	return returnValue
@@ -31,8 +32,10 @@ func (s *Server) sendTick() int32 {
 
 func (s *Server) mergeAndTick(message *pb.ClientMessage) int32 {
 	s.mu.Lock()
+	log.Println("Merging between local timestamp: " + strconv.Itoa(int(s.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and incrementing.")
 	s.lamport = max(s.lamport, message.Lamport) + 1
 	returnValue := s.lamport
+	log.Println("Server lamport merged and ticked to: " + strconv.Itoa(int(s.lamport)))
 	s.mu.Unlock()
 
 	return returnValue
