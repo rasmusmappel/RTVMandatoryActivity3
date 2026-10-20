@@ -4,11 +4,13 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
+	"unicode/utf8"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -27,7 +29,7 @@ func (c *Clock) sendTick() int32 {
 	c.mu.Lock()
 	c.lamport++
 	returnValue := c.lamport
-	log.Println("Lamport ticked to: " + strconv.Itoa(int(c.lamport)))
+	log.Println("[TICK] Lamport ticked to: " + strconv.Itoa(int(c.lamport)))
 	c.mu.Unlock()
 
 	return returnValue
@@ -35,10 +37,10 @@ func (c *Clock) sendTick() int32 {
 
 func (c *Clock) mergeAndTick(message *pb.ServerMessage) int32 {
 	c.mu.Lock()
-	log.Println("Merging between local timestamp: " + strconv.Itoa(int(c.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and ticking by one.")
+	log.Println("[MERGE] Merging between local timestamp: " + strconv.Itoa(int(c.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and ticking by one.")
 	c.lamport = max(c.lamport, message.Lamport) + 1
 	returnValue := c.lamport
-	log.Println("Lamport merged and ticked to: " + strconv.Itoa(int(c.lamport)))
+	log.Println("[TICK] Lamport merged and ticked to: " + strconv.Itoa(int(c.lamport)))
 	c.mu.Unlock()
 
 	return returnValue
@@ -69,7 +71,7 @@ func main() {
 	conn, err := grpc.NewClient("localhost:5050", grpc.WithTransportCredentials(insecure.NewCredentials()))
 
 	if err != nil {
-		log.Fatalf("Server not found!")
+		log.Fatalf("[ERROR] Server not found!")
 	}
 
 	client := pb.NewChitChatClient(conn)
@@ -77,7 +79,7 @@ func main() {
 	stream, err := client.Chat(context.Background())
 
 	if err != nil {
-		log.Fatalf("Chat could not be established!")
+		log.Fatalf("[ERROR] Chat could not be established!")
 	}
 
 	defer conn.Close()
@@ -108,6 +110,12 @@ func main() {
 			leave = true
 		}
 
+		// checking to see if the input is valid
+		if !utf8.ValidString(input) || !(utf8.RuneCountInString(input) <= 128) || input == "" {
+			fmt.Println("[INFO] Your message is either too long, or contains invalid characters! Your message has not been sent. Please enter a valid string of 128 characters or less")
+			continue
+		}
+
 		// construct message
 		messageConstruct := pb.ClientMessage{
 			Id:      id,
@@ -132,12 +140,19 @@ func (c *Clock) PrintReceivedMessages(stream pb.ChitChat_ChatClient) {
 	for {
 		message, err := stream.Recv()
 
-		if err != nil {
-			log.Fatalf("Error in received message! Server could be shut down.")
+		if err == io.EOF {
+			log.Println("[DISCONNECT] EOF: Stream is closed.")
+			return
 		}
+		if err != nil {
+			log.Println("[ERROR] Error in recieved message! Server could be shut down.")
+			return
+		}
+
+		log.Println(message.Message + " - timestamp: " + strconv.Itoa(int(message.Lamport)))
 
 		c.mergeAndTick(message)
 
-		fmt.Println(message.Message)
+		fmt.Println(message.Message + " - timestamp: " + strconv.Itoa(int(message.Lamport)))
 	}
 }

@@ -25,7 +25,7 @@ func (s *Server) sendTick() int32 {
 	s.mu.Lock()
 	s.lamport++
 	returnValue := s.lamport
-	log.Println("Lamport ticked to: " + strconv.Itoa(int(s.lamport)))
+	log.Println("[TICK] Lamport ticked to: " + strconv.Itoa(int(s.lamport)))
 	s.mu.Unlock()
 
 	return returnValue
@@ -33,10 +33,10 @@ func (s *Server) sendTick() int32 {
 
 func (s *Server) mergeAndTick(message *pb.ClientMessage) int32 {
 	s.mu.Lock()
-	log.Println("Merging between local timestamp: " + strconv.Itoa(int(s.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and ticking by one.")
+	log.Println("[MERGE] Merging between local timestamp: " + strconv.Itoa(int(s.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and ticking by one.")
 	s.lamport = max(s.lamport, message.Lamport) + 1
 	returnValue := s.lamport
-	log.Println("Lamport merged and ticked to: " + strconv.Itoa(int(s.lamport)))
+	log.Println("[TICK] Lamport merged and ticked to: " + strconv.Itoa(int(s.lamport)))
 	s.mu.Unlock()
 
 	return returnValue
@@ -44,13 +44,8 @@ func (s *Server) mergeAndTick(message *pb.ClientMessage) int32 {
 
 func (s *Server) Chat(stream pb.ChitChat_ChatServer) error {
 	firstMessage, err := stream.Recv()
-	if err != nil {
-		//log.Fatalf("Error upon receiving a message")
+	if err != nil || !firstMessage.Join {
 		return err
-	}
-
-	if !firstMessage.Join {
-		//return status.Error("")
 	}
 
 	t := s.mergeAndTick(firstMessage)
@@ -63,7 +58,7 @@ func (s *Server) Chat(stream pb.ChitChat_ChatServer) error {
 	s.clients[firstMessage.Id] = outMessageCh
 	s.mu.Unlock()
 
-	var loggedMessage string = "Participant " + strconv.Itoa(int(firstMessage.Id)) + " joined Chit Chat at logical time: " + strconv.Itoa(int(t))
+	var loggedMessage string = "[JOIN] Participant " + strconv.Itoa(int(firstMessage.Id)) + " joined Chit Chat at logical time: " + strconv.Itoa(int(t))
 
 	log.Println(loggedMessage)
 
@@ -83,7 +78,7 @@ func (s *Server) Chat(stream pb.ChitChat_ChatServer) error {
 		clientMessage, err := stream.Recv()
 
 		if err != nil {
-			log.Printf("Message from participant %d has caused an error! \n", firstMessage.Id)
+			log.Printf("[ERROR] Message from participant %d has caused an error! \n", firstMessage.Id)
 			break
 		}
 
@@ -93,8 +88,8 @@ func (s *Server) Chat(stream pb.ChitChat_ChatServer) error {
 			break
 		}
 
-		messageLog := "Participant " + strconv.Itoa(int(firstMessage.Id)) + " sent a message at logical time: " + strconv.Itoa(int(t))
-		messageContent := "Participant: " + strconv.Itoa(int(firstMessage.Id)) + " " + clientMessage.Message
+		messageLog := "[RECEIVED] Participant " + strconv.Itoa(int(firstMessage.Id)) + " sent a message at logical time: " + strconv.Itoa(int(t))
+		messageContent := "[BROADCAST] Participant " + strconv.Itoa(int(firstMessage.Id)) + ": " + clientMessage.Message
 
 		log.Println(messageLog)
 
@@ -114,7 +109,7 @@ func (s *Server) Chat(stream pb.ChitChat_ChatServer) error {
 	s.mu.Lock()
 	delete(s.clients, firstMessage.Id)
 	close(outMessageCh)
-	leaveString := "Participant " + strconv.Itoa(int(firstMessage.Id)) + " left Chit Chat at logical time: " + strconv.Itoa(int(s.lamport))
+	leaveString := "[LEAVE] Participant " + strconv.Itoa(int(firstMessage.Id)) + " left Chit Chat at logical time: " + strconv.Itoa(int(s.lamport))
 	s.mu.Unlock()
 	log.Println(leaveString)
 
@@ -138,7 +133,7 @@ func (s *Server) SendToClients(stream pb.ChitChat_ChatServer, ch chan *pb.Server
 		err := stream.Send(msg)
 
 		if err != nil {
-			log.Println("Could not send message!")
+			log.Println("[ERROR] Could not send message!")
 		}
 	}
 }
@@ -168,7 +163,7 @@ func main() {
 
 	pb.RegisterChitChatServer(grpcServer, &server)
 
-	log.Println("Server has started at logical time: 0")
+	log.Println("[STARTUP] Server has started at logical time: 0")
 
 	go grpcServer.Serve(listener)
 
@@ -183,6 +178,6 @@ func main() {
 	grpcServer.Stop()
 
 	server.mu.Lock()
-	log.Println("Server has shutdown at logical time: " + strconv.Itoa(int(server.lamport)))
+	log.Println("[SHUTDOWN] Server has shutdown at logical time: " + strconv.Itoa(int(server.lamport)))
 	server.mu.Unlock()
 }

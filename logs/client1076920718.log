@@ -1,0 +1,46 @@
+[CLIENT 1076920718] 2026/10/20 18:47:01 [TICK] Lamport ticked to: 1
+[CLIENT 1076920718] 2026/10/20 18:47:01 [JOIN] Participant 1076920718 joined Chit Chat at logical time: 2 - timestamp: 3
+[CLIENT 1076920718] 2026/10/20 18:47:01 [MERGE] Merging between local timestamp: 1 and message timestamp: 3, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:47:01 [TICK] Lamport merged and ticked to: 4
+[CLIENT 1076920718] 2026/10/20 18:47:26 [TICK] Lamport ticked to: 5
+[CLIENT 1076920718] 2026/10/20 18:47:26 [BROADCAST] Participant 1076920718: Is anyone here? - timestamp: 7
+[CLIENT 1076920718] 2026/10/20 18:47:26 [MERGE] Merging between local timestamp: 5 and message timestamp: 7, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:47:26 [TICK] Lamport merged and ticked to: 8
+[CLIENT 1076920718] 2026/10/20 18:47:48 [JOIN] Participant 780930919 joined Chit Chat at logical time: 8 - timestamp: 9
+[CLIENT 1076920718] 2026/10/20 18:47:48 [MERGE] Merging between local timestamp: 8 and message timestamp: 9, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:47:48 [TICK] Lamport merged and ticked to: 10
+[CLIENT 1076920718] 2026/10/20 18:47:59 [BROADCAST] Participant 780930919: Hello, is anyone here? - timestamp: 13
+[CLIENT 1076920718] 2026/10/20 18:47:59 [MERGE] Merging between local timestamp: 10 and message timestamp: 13, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:47:59 [TICK] Lamport merged and ticked to: 14
+[CLIENT 1076920718] 2026/10/20 18:48:14 [TICK] Lamport ticked to: 15
+[CLIENT 1076920718] 2026/10/20 18:48:14 [BROADCAST] Participant 1076920718: Oh, that's funny, I just asked the same question, haha - timestamp: 17
+[CLIENT 1076920718] 2026/10/20 18:48:14 [MERGE] Merging between local timestamp: 15 and message timestamp: 17, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:48:14 [TICK] Lamport merged and ticked to: 18
+[CLIENT 1076920718] 2026/10/20 18:48:22 [BROADCAST] Participant 780930919: lol - timestamp: 21
+[CLIENT 1076920718] 2026/10/20 18:48:22 [MERGE] Merging between local timestamp: 18 and message timestamp: 21, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:48:22 [TICK] Lamport merged and ticked to: 22
+[CLIENT 1076920718] 2026/10/20 18:48:32 [JOIN] Participant 1213366606 joined Chit Chat at logical time: 22 - timestamp: 23
+[CLIENT 1076920718] 2026/10/20 18:48:32 [MERGE] Merging between local timestamp: 22 and message timestamp: 23, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:48:32 [TICK] Lamport merged and ticked to: 24
+[CLIENT 1076920718] 2026/10/20 18:48:48 [TICK] Lamport ticked to: 25
+[CLIENT 1076920718] 2026/10/20 18:48:48 [BROADCAST] Participant 1076920718: Oh, hello 1213366606! - timestamp: 27
+[CLIENT 1076920718] 2026/10/20 18:48:48 [MERGE] Merging between local timestamp: 25 and message timestamp: 27, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:48:48 [TICK] Lamport merged and ticked to: 28
+[CLIENT 1076920718] 2026/10/20 18:48:55 [BROADCAST] Participant 1213366606: Hello to you too! - timestamp: 31
+[CLIENT 1076920718] 2026/10/20 18:48:55 [MERGE] Merging between local timestamp: 28 and message timestamp: 31, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:48:55 [TICK] Lamport merged and ticked to: 32
+[CLIENT 1076920718] 2026/10/20 18:49:02 [BROADCAST] Participant 1213366606: So what have you been talking about? - timestamp: 35
+[CLIENT 1076920718] 2026/10/20 18:49:02 [MERGE] Merging between local timestamp: 32 and message timestamp: 35, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:49:02 [TICK] Lamport merged and ticked to: 36
+[CLIENT 1076920718] 2026/10/20 18:49:16 [BROADCAST] Participant 780930919: Not much, just joined - timestamp: 39
+[CLIENT 1076920718] 2026/10/20 18:49:16 [MERGE] Merging between local timestamp: 36 and message timestamp: 39, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:49:16 [TICK] Lamport merged and ticked to: 40
+[CLIENT 1076920718] 2026/10/20 18:49:22 [TICK] Lamport ticked to: 41
+[CLIENT 1076920718] 2026/10/20 18:49:22 [BROADCAST] Participant 1076920718: Yeah, me too - timestamp: 43
+[CLIENT 1076920718] 2026/10/20 18:49:22 [MERGE] Merging between local timestamp: 41 and message timestamp: 43, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:49:22 [TICK] Lamport merged and ticked to: 44
+[CLIENT 1076920718] 2026/10/20 18:49:33 [TICK] Lamport ticked to: 45
+[CLIENT 1076920718] 2026/10/20 18:49:33 [BROADCAST] Participant 1076920718: Well, I'll be going now, bye! - timestamp: 47
+[CLIENT 1076920718] 2026/10/20 18:49:33 [MERGE] Merging between local timestamp: 45 and message timestamp: 47, and ticking by one.
+[CLIENT 1076920718] 2026/10/20 18:49:33 [TICK] Lamport merged and ticked to: 48
+[CLIENT 1076920718] 2026/10/20 18:49:37 [TICK] Lamport ticked to: 49

@@ -1,0 +1,78 @@
+[SERVER] 2026/10/20 18:46:51 [STARTUP] Server has started at logical time: 0
+[SERVER] 2026/10/20 18:47:01 [MERGE] Merging between local timestamp: 0 and message timestamp: 1, and ticking by one.
+[SERVER] 2026/10/20 18:47:01 [TICK] Lamport merged and ticked to: 2
+[SERVER] 2026/10/20 18:47:01 [JOIN] Participant 1076920718 joined Chit Chat at logical time: 2
+[SERVER] 2026/10/20 18:47:01 [TICK] Lamport ticked to: 3
+[SERVER] 2026/10/20 18:47:26 [MERGE] Merging between local timestamp: 3 and message timestamp: 5, and ticking by one.
+[SERVER] 2026/10/20 18:47:26 [TICK] Lamport merged and ticked to: 6
+[SERVER] 2026/10/20 18:47:26 [RECEIVED] Participant 1076920718 sent a message at logical time: 6
+[SERVER] 2026/10/20 18:47:26 [TICK] Lamport ticked to: 7
+[SERVER] 2026/10/20 18:47:48 [MERGE] Merging between local timestamp: 7 and message timestamp: 1, and ticking by one.
+[SERVER] 2026/10/20 18:47:48 [TICK] Lamport merged and ticked to: 8
+[SERVER] 2026/10/20 18:47:48 [JOIN] Participant 780930919 joined Chit Chat at logical time: 8
+[SERVER] 2026/10/20 18:47:48 [TICK] Lamport ticked to: 9
+[SERVER] 2026/10/20 18:47:59 [MERGE] Merging between local timestamp: 9 and message timestamp: 11, and ticking by one.
+[SERVER] 2026/10/20 18:47:59 [TICK] Lamport merged and ticked to: 12
+[SERVER] 2026/10/20 18:47:59 [RECEIVED] Participant 780930919 sent a message at logical time: 12
+[SERVER] 2026/10/20 18:47:59 [TICK] Lamport ticked to: 13
+[SERVER] 2026/10/20 18:48:14 [MERGE] Merging between local timestamp: 13 and message timestamp: 15, and ticking by one.
+[SERVER] 2026/10/20 18:48:14 [TICK] Lamport merged and ticked to: 16
+[SERVER] 2026/10/20 18:48:14 [RECEIVED] Participant 1076920718 sent a message at logical time: 16
+[SERVER] 2026/10/20 18:48:14 [TICK] Lamport ticked to: 17
+[SERVER] 2026/10/20 18:48:22 [MERGE] Merging between local timestamp: 17 and message timestamp: 19, and ticking by one.
+[SERVER] 2026/10/20 18:48:22 [TICK] Lamport merged and ticked to: 20
+[SERVER] 2026/10/20 18:48:22 [RECEIVED] Participant 780930919 sent a message at logical time: 20
+[SERVER] 2026/10/20 18:48:22 [TICK] Lamport ticked to: 21
+[SERVER] 2026/10/20 18:48:32 [MERGE] Merging between local timestamp: 21 and message timestamp: 1, and ticking by one.
+[SERVER] 2026/10/20 18:48:32 [TICK] Lamport merged and ticked to: 22
+[SERVER] 2026/10/20 18:48:32 [JOIN] Participant 1213366606 joined Chit Chat at logical time: 22
+[SERVER] 2026/10/20 18:48:32 [TICK] Lamport ticked to: 23
+[SERVER] 2026/10/20 18:48:48 [MERGE] Merging between local timestamp: 23 and message timestamp: 25, and ticking by one.
+[SERVER] 2026/10/20 18:48:48 [TICK] Lamport merged and ticked to: 26
+[SERVER] 2026/10/20 18:48:48 [RECEIVED] Participant 1076920718 sent a message at logical time: 26
+[SERVER] 2026/10/20 18:48:48 [TICK] Lamport ticked to: 27
+[SERVER] 2026/10/20 18:48:55 [MERGE] Merging between local timestamp: 27 and message timestamp: 29, and ticking by one.
+[SERVER] 2026/10/20 18:48:55 [TICK] Lamport merged and ticked to: 30
+[SERVER] 2026/10/20 18:48:55 [RECEIVED] Participant 1213366606 sent a message at logical time: 30
+[SERVER] 2026/10/20 18:48:55 [TICK] Lamport ticked to: 31
+[SERVER] 2026/10/20 18:49:02 [MERGE] Merging between local timestamp: 31 and message timestamp: 33, and ticking by one.
+[SERVER] 2026/10/20 18:49:02 [TICK] Lamport merged and ticked to: 34
+[SERVER] 2026/10/20 18:49:02 [RECEIVED] Participant 1213366606 sent a message at logical time: 34
+[SERVER] 2026/10/20 18:49:02 [TICK] Lamport ticked to: 35
+[SERVER] 2026/10/20 18:49:16 [MERGE] Merging between local timestamp: 35 and message timestamp: 37, and ticking by one.
+[SERVER] 2026/10/20 18:49:16 [TICK] Lamport merged and ticked to: 38
+[SERVER] 2026/10/20 18:49:16 [RECEIVED] Participant 780930919 sent a message at logical time: 38
+[SERVER] 2026/10/20 18:49:16 [TICK] Lamport ticked to: 39
+[SERVER] 2026/10/20 18:49:22 [MERGE] Merging between local timestamp: 39 and message timestamp: 41, and ticking by one.
+[SERVER] 2026/10/20 18:49:22 [TICK] Lamport merged and ticked to: 42
+[SERVER] 2026/10/20 18:49:22 [RECEIVED] Participant 1076920718 sent a message at logical time: 42
+[SERVER] 2026/10/20 18:49:22 [TICK] Lamport ticked to: 43
+[SERVER] 2026/10/20 18:49:33 [MERGE] Merging between local timestamp: 43 and message timestamp: 45, and ticking by one.
+[SERVER] 2026/10/20 18:49:33 [TICK] Lamport merged and ticked to: 46
+[SERVER] 2026/10/20 18:49:33 [RECEIVED] Participant 1076920718 sent a message at logical time: 46
+[SERVER] 2026/10/20 18:49:33 [TICK] Lamport ticked to: 47
+[SERVER] 2026/10/20 18:49:37 [MERGE] Merging between local timestamp: 47 and message timestamp: 49, and ticking by one.
+[SERVER] 2026/10/20 18:49:37 [TICK] Lamport merged and ticked to: 50
+[SERVER] 2026/10/20 18:49:37 [LEAVE] Participant 1076920718 left Chit Chat at logical time: 50
+[SERVER] 2026/10/20 18:49:37 [TICK] Lamport ticked to: 51
+[SERVER] 2026/10/20 18:50:23 [MERGE] Merging between local timestamp: 51 and message timestamp: 53, and ticking by one.
+[SERVER] 2026/10/20 18:50:23 [TICK] Lamport merged and ticked to: 54
+[SERVER] 2026/10/20 18:50:23 [RECEIVED] Participant 780930919 sent a message at logical time: 54
+[SERVER] 2026/10/20 18:50:23 [TICK] Lamport ticked to: 55
+[SERVER] 2026/10/20 18:50:25 [MERGE] Merging between local timestamp: 55 and message timestamp: 57, and ticking by one.
+[SERVER] 2026/10/20 18:50:25 [TICK] Lamport merged and ticked to: 58
+[SERVER] 2026/10/20 18:50:25 [LEAVE] Participant 780930919 left Chit Chat at logical time: 58
+[SERVER] 2026/10/20 18:50:25 [TICK] Lamport ticked to: 59
+[SERVER] 2026/10/20 18:50:49 [MERGE] Merging between local timestamp: 59 and message timestamp: 61, and ticking by one.
+[SERVER] 2026/10/20 18:50:49 [TICK] Lamport merged and ticked to: 62
+[SERVER] 2026/10/20 18:50:49 [RECEIVED] Participant 1213366606 sent a message at logical time: 62
+[SERVER] 2026/10/20 18:50:49 [TICK] Lamport ticked to: 63
+[SERVER] 2026/10/20 18:51:56 [MERGE] Merging between local timestamp: 63 and message timestamp: 65, and ticking by one.
+[SERVER] 2026/10/20 18:51:56 [TICK] Lamport merged and ticked to: 66
+[SERVER] 2026/10/20 18:51:56 [RECEIVED] Participant 1213366606 sent a message at logical time: 66
+[SERVER] 2026/10/20 18:51:56 [TICK] Lamport ticked to: 67
+[SERVER] 2026/10/20 18:52:00 [MERGE] Merging between local timestamp: 67 and message timestamp: 69, and ticking by one.
+[SERVER] 2026/10/20 18:52:00 [TICK] Lamport merged and ticked to: 70
+[SERVER] 2026/10/20 18:52:00 [LEAVE] Participant 1213366606 left Chit Chat at logical time: 70
+[SERVER] 2026/10/20 18:52:00 [TICK] Lamport ticked to: 71
+[SERVER] 2026/10/20 18:52:06 [SHUTDOWN] Server has shutdown at logical time: 71
