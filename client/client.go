@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 
@@ -26,6 +27,7 @@ func (c *Clock) sendTick() int32 {
 	c.mu.Lock()
 	c.lamport++
 	returnValue := c.lamport
+	log.Println("Lamport ticked to: " + strconv.Itoa(int(c.lamport)))
 	c.mu.Unlock()
 
 	return returnValue
@@ -33,8 +35,10 @@ func (c *Clock) sendTick() int32 {
 
 func (c *Clock) mergeAndTick(message *pb.ServerMessage) int32 {
 	c.mu.Lock()
+	log.Println("Merging between local timestamp: " + strconv.Itoa(int(c.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and ticking by one.")
 	c.lamport = max(c.lamport, message.Lamport) + 1
 	returnValue := c.lamport
+	log.Println("Lamport merged and ticked to: " + strconv.Itoa(int(c.lamport)))
 	c.mu.Unlock()
 
 	return returnValue
@@ -42,6 +46,19 @@ func (c *Clock) mergeAndTick(message *pb.ServerMessage) int32 {
 
 func main() {
 	id := rand.Int31()
+	logFileName := "logs/client" + strconv.Itoa(int(id)) + ".log"
+
+	file, err := os.OpenFile(logFileName, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.SetOutput(file)
+	logPrefix := "[CLIENT " + strconv.Itoa(int(id)) + "] "
+	log.SetPrefix(logPrefix)
+
+	defer file.Close()
+
 	clock := Clock{
 		lamport: 0,
 	}

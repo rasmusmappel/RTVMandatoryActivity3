@@ -3,6 +3,7 @@ package main
 import (
 	pb "RTVMandatoryActivity3/grpc"
 	"bufio"
+	"io"
 	"log"
 	"net"
 	"os"
@@ -24,7 +25,7 @@ func (s *Server) sendTick() int32 {
 	s.mu.Lock()
 	s.lamport++
 	returnValue := s.lamport
-	log.Println("Server lamport ticked to: " + strconv.Itoa(int(s.lamport)))
+	log.Println("Lamport ticked to: " + strconv.Itoa(int(s.lamport)))
 	s.mu.Unlock()
 
 	return returnValue
@@ -32,10 +33,10 @@ func (s *Server) sendTick() int32 {
 
 func (s *Server) mergeAndTick(message *pb.ClientMessage) int32 {
 	s.mu.Lock()
-	log.Println("Merging between local timestamp: " + strconv.Itoa(int(s.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and incrementing.")
+	log.Println("Merging between local timestamp: " + strconv.Itoa(int(s.lamport)) + " and message timestamp: " + strconv.Itoa(int(message.Lamport)) + ", and ticking by one.")
 	s.lamport = max(s.lamport, message.Lamport) + 1
 	returnValue := s.lamport
-	log.Println("Server lamport merged and ticked to: " + strconv.Itoa(int(s.lamport)))
+	log.Println("Lamport merged and ticked to: " + strconv.Itoa(int(s.lamport)))
 	s.mu.Unlock()
 
 	return returnValue
@@ -143,6 +144,19 @@ func (s *Server) SendToClients(stream pb.ChitChat_ChatServer, ch chan *pb.Server
 }
 
 func main() {
+	os.MkdirAll("logs", 0755)
+
+	file, err := os.OpenFile("logs/server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	writer := io.MultiWriter(os.Stdout, file)
+	log.SetOutput(writer)
+	log.SetPrefix("[SERVER] ")
+
+	defer file.Close()
+
 	server := Server{
 		lamport: 0,
 		clients: make(map[int32]chan *pb.ServerMessage),
